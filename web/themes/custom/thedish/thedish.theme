@@ -1,0 +1,92 @@
+<?php
+
+use Drupal\media\Entity\Media;
+
+function thedish_preprocess_page(&$variables)
+{
+    $footer_text = t('&copy;@year The Georgetown Dish · All Rights Reserved', array('@year' => date('Y')));
+    addContentVariable($variables, 'footer_text', $footer_text);
+}
+
+function thedish_preprocess_node(&$variables)
+{
+
+    // vardumperMessage($variables);
+    // For Articles, grab user profile fields for node author
+    if ($variables['node']->getType() == 'article') {
+        $owner = $variables['node']->getOwner();
+        // vardumperMessage($owner);
+        $author = \Drupal::entityTypeManager()->getViewBuilder('user')->view($variables['node']->getOwner(), 'article_view');
+        // vardumperMessage($author);
+        $variables['zootv'] = $author;
+        $user = $author['#user'];
+        // $picture = $user->get('field_glam_shot')->entity->uri['value'];
+        // $variables['poo'] = $picture;
+        $variables['divney2'] = $user;
+
+
+
+        addContentVariable($variables, 'author_name', $user->get('field_full_name')->value);
+        addContentVariable($variables, 'author_image', 'default');
+
+
+        // if ($user->hasField('field_glam_shot')) {
+        //     $variables['has pic'] = true;
+        //     $glam_shot = $user->get('field_glam_shot')->getValue();
+        //     $variables['glam_shot'] = $glam_shot;
+        //     if (!empty($glam_shot)) {
+        //         $target_id = $glam_shot[0]['target_id'];
+        //         // $target_id = 11;
+        //         $variables['targetid'] = $target_id;
+        //         $fileone = Media::load($target_id);
+        //         $file = \Drupal\file\Entity\File::load($target_id);
+        //         $picture = $file->getFileUri();
+        //         // vardumperMessage($fileone);
+        //         // $entity = Media::load($glam_shot[0]['target_id']);
+        //         $variables['fileone'] = $fileone;
+        //         $peter = $fileone->values['field_media_image'];
+        //         // $divuri = $fileone->getFileUri();
+        //         // $variables['divuri'] = $divuri;
+        //         addContentVariable($variables, 'author_image', $picture);
+        //         // $variables['author_imaged'] = $fileone->url();
+        //     }
+        // }
+
+        // $variables['divney'] = $user;
+        // $variables['author_name'] = $user->get('field_full_name')->value;
+        // node.field_team_location.entity.name.value
+        // $variables['author_image'] = $user->get('field_profile_pic')->first()->getValue();
+        // $variables['author_bio'] = $user->get('field_bio')->value;
+
+
+        // $stella = $output;
+
+        // $entity = $node->get('field_featured_photo');
+        // $stella = array_column($entity->autoren->getValue(), 'target_id');
+
+        // $variables['madi'] = $stella;
+    }
+}
+
+/**
+* https://github.com/webartisans-org/drupal_8_unset_html_head_link
+*
+* Preprocess function for node.html.twig.
+*
+
+*
+*
+* drupal 7 and 8 (inside twig) to update classes
+* function icecream_preprocess_node(&$variables) {
+* if (!$variables['status']) {
+* $variables['classes_array'][] = 'node--unpublished';
+* }
+* }
+*/
+
+
+function addContentVariable(array &$variables, string $key, $value)
+{
+    // add a key/value pair to $variables['content'] for templates
+    $variables['content'][$key] = $value;
+}

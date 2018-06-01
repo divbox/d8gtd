@@ -1,0 +1,10 @@
+base:
+  version: 1.x
+  css:
+    theme:
+      assets/css/style.css: {}
+  js:
+    assets/js/bootstrap.min.js: {}
+  dependencies:
+    - core/jquery
+   

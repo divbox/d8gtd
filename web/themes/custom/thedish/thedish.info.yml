@@ -1,0 +1,9 @@
+name: The GeorgetownDish Theme
+type: theme
+description: 'A responsive theme using bootstrap sass.'
+core: 8.x
+libraries:
+  - thedish/base
+regions:
+  content: Content
+  sidebar: Sidebar
