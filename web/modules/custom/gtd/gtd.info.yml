@@ -1,5 +1,0 @@
-name: 'GTD Utils/Helpers'
-type: module
-description: "assorted utilities and helpers for the site"
-package: Divbox
-core: 8.x
